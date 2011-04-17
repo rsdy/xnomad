@@ -26,7 +26,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "urxvt"
+myTerminal      = "exec urxvt"
 
 -- Width of the window border in pixels.
 --
@@ -276,7 +276,7 @@ myStartupHook = return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-	xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/xmobar"
+	xmproc <- spawnPipe "exec /usr/bin/xmobar ~/.xmonad/xmobar"
 	xmonad $ withUrgencyHook NoUrgencyHook defaults {
 		logHook = ((dynamicLogWithPP $ xmobarPP {
                                 ppOutput = hPutStrLn xmproc
