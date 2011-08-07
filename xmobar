@@ -8,10 +8,7 @@ Config { font = "xft:Envy Code R-8"
       , fgColor = "#f2f2f2"
       , position = Static { xpos = 0, ypos = 0, width = 1680, height = 16 }
       , lowerOnStart = True
-      , commands = [ Run MultiCpu ["-t","Cpu:<total0><total1>","-L","3","-H","50","--normal","#CEFFAC","--high","#FFB6B0","-w","5"] 10
-                   , Run Memory ["-t","Mem: <usedratio>%"] 10
-                   , Run Network "wlan0" ["-t","Net: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 5
-                   , Run Date "%a %b %_d %H:%M" "date" 10
+      , commands = [ Run Date "%a %b %_d %H:%M" "date" 10
                    , Run Com "~/.xmonad/vol.sh" [] "vol" 10
                    , Run Com "~/.xmonad/battery.sh" [] "battery" 100
                    , Run Com "~/.xmonad/hacksense.sh" [] "hack" 3000
@@ -19,6 +16,6 @@ Config { font = "xft:Envy Code R-8"
                    ]
       , sepChar = "%"
       , alignSep = "}{"
-      , template = "%StdinReader% }{ %battery%   %multicpu%   %memory%   %wlan0%   %vol%   %hack%   <fc=#FFB6B0>%date%</fc>"
+      , template = "%StdinReader% }{ %battery%   %vol%   %hack%   <fc=#F30085>%date%</fc>"
       }
 

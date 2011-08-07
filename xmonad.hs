@@ -68,7 +68,7 @@ myWorkspaces    = ["comm","web","irc","4","5","6","7","music","vm"]
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#7c7c7c"
-myFocusedBorderColor = "#ffb6b0"
+myFocusedBorderColor = "#f30085"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -195,8 +195,8 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myTabConfig = defaultTheme {   activeBorderColor = "#FFB6B0"
-                             , activeTextColor = "#FFB6B0"
+myTabConfig = defaultTheme {   activeBorderColor = "#f30085"
+                             , activeTextColor = "#f30085"
                              , activeColor = "#000000"
                              , inactiveBorderColor = "#7C7C7C"
                              , inactiveTextColor = "#EEEEEE"
@@ -280,8 +280,8 @@ main = do
 	xmonad $ withUrgencyHook NoUrgencyHook defaults {
 		logHook = ((dynamicLogWithPP $ xmobarPP {
                                 ppOutput = hPutStrLn xmproc
-                                , ppTitle = xmobarColor "#FFB6B0" "" . shorten 100
-                                , ppCurrent = xmobarColor "#FFB6B0" ""
+                                , ppTitle = xmobarColor "#f30085" "" . shorten 100
+                                , ppCurrent = xmobarColor "#f30085" ""
                                 , ppUrgent = xmobarColor "#FF0000" "" . xmobarStrip
                                 , ppSep = "   "
                                 })
