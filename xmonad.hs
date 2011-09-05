@@ -26,7 +26,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "exec urxvt"
+myTerminal      = "exec urxvtc"
 
 -- Width of the window border in pixels.
 --
@@ -65,11 +65,6 @@ myNumlockMask   = mod2Mask
 --
 myWorkspaces    = ["comm","web","irc","4","5","6","7","music","vm"]
 
--- Border colors for unfocused and focused windows, respectively.
---
-myNormalBorderColor  = "#7c7c7c"
-myFocusedBorderColor = "#f30085"
-
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -81,13 +76,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. controlMask, xK_l   ), spawn "~/.xmonad/lock.sh")
     , ((modMask .|. controlMask, xK_F12 ), spawn "~/.xmonad/setxkbmap us")
     , ((modMask .|. controlMask, xK_F11 ), spawn "~/.xmonad/setxkbmap hu")
-    , ((modMask .|. controlMask, xK_F8  ), spawn "urxvt -e mocp")
+    , ((modMask .|. controlMask, xK_F8  ), spawn "urxvt -title mocp -e mocp")
     , ((0, 0x1008ff11                   ), spawn "amixer set Master 1-")
     , ((0, 0x1008ff13                   ), spawn "amixer set Master 1+")
 
-
     -- launch dmenu
-    , ((modMask,               xK_p     ), spawn "exe=`dmenu_path | ~/.xmonad/dmenu` && eval \"exec $exe\"")
+    , ((modMask,               xK_p     ), spawn "~/.xmonad/dmenu.sh")
 
     -- close focused window
     , ((modMask .|. shiftMask, xK_c     ), kill)
@@ -138,9 +132,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modMask              , xK_period), sendMessage (IncMasterN (-1)))
 
-    -- toggle the status bar gap
-    -- TODO, update this binding with avoidStruts , ((modMask              , xK_b     ),
-
     -- Quit xmonad
     , ((modMask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
@@ -148,7 +139,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask              , xK_q     ), restart "xmonad" True)
     ]
     ++
-
     --
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
@@ -157,7 +147,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
-
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
@@ -196,11 +185,18 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- which denotes layout choice.
 --
 myTabConfig = defaultTheme {   activeBorderColor = "#f30085"
-                             , activeTextColor = "#f30085"
-                             , activeColor = "#000000"
-                             , inactiveBorderColor = "#7C7C7C"
-                             , inactiveTextColor = "#EEEEEE"
-                             , inactiveColor = "#000000" }
+                             , activeTextColor = "#f2f2f2"
+                             , activeColor = "#f30085"
+                             , inactiveBorderColor = "#222222"
+                             , inactiveTextColor = "#f2f2f2"
+                             , inactiveColor = "#222222" }
+--
+-- Border colors for unfocused and focused windows, respectively.
+--
+myNormalBorderColor  = "#222222"
+myFocusedBorderColor = "#f30085"
+
+
 myLayout = avoidStruts $ layoutHints (tiled ||| Mirror tiled ||| tabbed shrinkText myTabConfig ||| Full ||| spiral (6/7))
   where
      -- default tiling algorithm partitions the screen into two panes
@@ -238,10 +234,10 @@ myManageHook = composeAll
     , className =? "Exe"            --> doFloat
     , className =? "<unknown>"      --> doFloat
     , resource  =? "compose"        --> doFloat
---    , className =? "Chromium-browser"  --> doShift "2:web"
     , className =? "VirtualBox"     --> doShift "vm"
     , className =? "Transmission"   --> doShift "comm"
     , className =? "Skype"          --> doShift "comm"
+    , title     =? "mocp"           --> doShift "music"
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
@@ -276,20 +272,20 @@ myStartupHook = return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-	xmproc <- spawnPipe "exec /usr/bin/xmobar ~/.xmonad/xmobar"
-	xmonad $ withUrgencyHook NoUrgencyHook defaults {
-		logHook = ((dynamicLogWithPP $ xmobarPP {
-                                ppOutput = hPutStrLn xmproc
-                                , ppTitle = xmobarColor "#f30085" "" . shorten 100
-                                , ppCurrent = xmobarColor "#f30085" ""
-                                , ppUrgent = xmobarColor "#FF0000" "" . xmobarStrip
-                                , ppSep = "   "
-                                })
-                                >> updatePointer (Relative 0.5 0.5))
-                                >> fadeInactiveLogHook 0.95
-		, manageHook = manageDocks <+> myManageHook
-		, startupHook = setWMName "LG3D"
-	}
+    xmproc <- spawnPipe "exec /usr/bin/xmobar ~/.xmonad/xmobar"
+    xmonad $ withUrgencyHook NoUrgencyHook defaults {
+        logHook = ((dynamicLogWithPP $ xmobarPP {
+                ppOutput = hPutStrLn xmproc
+                , ppTitle = xmobarColor "#f30085" "" . shorten 100
+                , ppCurrent = xmobarColor "#f30085" ""
+                , ppUrgent = xmobarColor "#FF0000" "" . xmobarStrip
+                , ppSep = "   "
+                })
+                >> updatePointer (Relative 0.5 0.5))
+                >> fadeInactiveLogHook 0.85
+        , manageHook = manageDocks <+> myManageHook
+        , startupHook = setWMName "LG3D"
+    }
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
