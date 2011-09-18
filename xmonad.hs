@@ -74,8 +74,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((modMask, xK_Return), spawn $ XMonad.terminal conf)
 
     , ((modMask .|. controlMask, xK_l   ), spawn "~/.xmonad/lock.sh")
-    , ((modMask .|. controlMask, xK_F12 ), spawn "~/.xmonad/setxkbmap us")
-    , ((modMask .|. controlMask, xK_F11 ), spawn "~/.xmonad/setxkbmap hu")
+    , ((modMask .|. controlMask, xK_F12 ), spawn "~/.xmonad/setxkbmap.sh us")
+    , ((modMask .|. controlMask, xK_F11 ), spawn "~/.xmonad/setxkbmap.sh hu")
     , ((modMask .|. controlMask, xK_F8  ), spawn "urxvt -title mocp -e mocp")
     , ((0, 0x1008ff11                   ), spawn "amixer set Master 1-")
     , ((0, 0x1008ff13                   ), spawn "amixer set Master 1+")
