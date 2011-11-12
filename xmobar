@@ -6,7 +6,7 @@
 Config { font = "xft:Envy Code R-8"
       , bgColor = "#222222"
       , fgColor = "#f2f2f2"
-      , position = Static { xpos = 0, ypos = 0, width = 1680, height = 16 }
+      , position = Static { xpos = 0, ypos = 0, width = 1366, height = 16 }
       , lowerOnStart = False
       , commands = [ Run Date "%a %b %_d %H:%M" "date" 10
                    , Run Com "~/.xmonad/vol.sh" [] "vol" 10
