@@ -226,6 +226,7 @@ myManageHook = manageDocks
                <+> composeRules
                <+> composeAll
                    [ title     =? "mocp"    --> doShift "music"
+                   , title     =? "Grafika hazi feladat"    --> doFloat
                    , resource  =? "compose" --> doFloat ]
                <+> scratchpadManageHook (W.RationalRect 0 0 1 0.3)
                <+> manageHook defaultConfig
