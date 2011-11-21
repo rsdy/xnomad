@@ -179,6 +179,7 @@ myTabConfig = defaultTheme {   activeBorderColor = "#f30085"
 
 myLayout = smartBorders
            $ layoutHints
+           $ onWorkspace "irc" irc
            $ onWorkspace "web" tabs
            $ onWorkspace "vm" Full
            $ avoidStruts
@@ -187,6 +188,7 @@ myLayout = smartBorders
      basicLayout = tall ||| wide ||| tabs ||| spiral (6/7) ||| mgrid ||| Full
      tabs    = named "tabs" $ avoidStruts $ tabbed shrinkText myTabConfig
      tall    = named "tall" $ Tall nmaster delta ratio
+     irc     = (named "irc" $ avoidStruts $ Tall 1 0 (1/2)) ||| tall
      wide    = named "wide" $ Mirror tall
      mgrid   = named "grid" $ Mag.magnifiercz 1.2 $ Grid
      nmaster = 1
@@ -218,7 +220,8 @@ composeRules = composeOne $
      ignoreR = [ "desktop_window", "kdesktop" ]
      shiftC  = [ ("VirtualBox",    "vm" )
                , ( "Transmission", "comm" )
-               , ( "Skype",        "comm" )
+               , ( "Qtr",          "irc" )
+               , ( "Skype",        "irc" )
                , ( "mocp",         "music" ) ]
 
 
