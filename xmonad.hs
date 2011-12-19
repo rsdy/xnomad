@@ -53,7 +53,6 @@ import qualified Data.Map        as M
 myTerminal      = "exec urxvtc"
 myBorderWidth   = 2
 myModMask       = mod4Mask
-myNumlockMask   = mod2Mask
 
 myWorkspaces    = ["comm","web","irc","4","5","6","7","music","vm"]
 
@@ -192,8 +191,8 @@ myLayout = smartBorders
      wide    = named "wide" $ Mirror tall
      mgrid   = named "grid" $ Mag.magnifiercz 1.2 $ Grid
      nmaster = 1
-     ratio   = 3/4
-     delta   = 5/100
+     ratio   = 2/3
+     delta   = 3/100
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -212,25 +211,27 @@ myLayout = smartBorders
 --
 composeRules = composeOne $
                   [ transience ]
-               ++ [ resource  =? c -?> doIgnore  | c <- ignoreR ]
-               ++ [ className =? c -?> doFloat   | c <- floatC ]
+               ++ [ resource  =? c -?> doIgnore  | c      <- ignoreR ]
+               ++ [ resource  =? c -?> doFloat   | c      <- floatR ]
+               ++ [ className =? c -?> doFloat   | c      <- floatC ]
                ++ [ className =? c -?> doShift w | (c, w) <- shiftC ]
+               ++ [ title     =? c -?> doFloat   | c      <- floatT ]
+               ++ [ title     =? c -?> doShift w | (c, w) <- shiftT ]
   where
-     floatC  = [ "MPlayer", "Vlc", "Smplayer", "Gimp", "Exe", "<unknown>" ]
      ignoreR = [ "desktop_window", "kdesktop" ]
+     floatC  = [ "MPlayer", "Vlc", "Smplayer", "Gimp", "Exe", "<unknown>" ]
+     floatT  = [ "Grafika hazi feladat" ]
+     floatR  = [ "compose", "plugin-container" ]
      shiftC  = [ ("VirtualBox",    "vm" )
-               , ( "Transmission", "comm" )
-               , ( "Qtr",          "irc" )
-               , ( "Skype",        "irc" )
-               , ( "mocp",         "music" ) ]
+               , ( "Transmission-gtk", "irc" )
+               , ( "Keepassx",     "5" )
+               , ( "Skype",        "irc" ) ]
+     shiftT  = [ ( "mocp",         "music" )
+               , ( "k2net",        "irc" ) ]
 
 
 myManageHook = manageDocks
                <+> composeRules
-               <+> composeAll
-                   [ title     =? "mocp"    --> doShift "music"
-                   , title     =? "Grafika hazi feladat"    --> doFloat
-                   , resource  =? "compose" --> doFloat ]
                <+> scratchpadManageHook (W.RationalRect 0 0 1 0.3)
                <+> manageHook defaultConfig
 
@@ -276,7 +277,6 @@ main = do
              , focusFollowsMouse  = myFocusFollowsMouse
              , borderWidth        = myBorderWidth
              , modMask            = myModMask
-             , numlockMask        = myNumlockMask
              , workspaces         = myWorkspaces
              , normalBorderColor  = myNormalBorderColor
              , focusedBorderColor = myFocusedBorderColor
