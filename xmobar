@@ -1,21 +1,16 @@
--- xmobar config used by Vic Fryzel
--- Author: Vic Fryzel
--- http://github.com/vicfryzel/xmonad-config
--- This is setup for dual 1680x1050 monitors, with the right monitor as primary
-
 Config { font = "xft:Envy Code R-8"
       , bgColor = "#222222"
       , fgColor = "#f2f2f2"
       , position = Static { xpos = 0, ypos = 0, width = 1366, height = 16 }
       , lowerOnStart = False
       , commands = [ Run Date "%a %b %_d %H:%M" "date" 10
-                   , Run Com "~/.xmonad/vol.sh" [] "vol" 10
-                   , Run Com "~/.xmonad/battery.sh" [] "battery" 100
                    , Run Com "~/.xmonad/hacksense.sh" [] "hack" 3000
+                   , Run BatteryP ["BAT0"] ["-t", "bat: <timeleft>"] 100
+                   , Run CommandReader "~/.xmonad/vol.sh" "vol"
                    , Run StdinReader
                    ]
       , sepChar = "%"
       , alignSep = "}{"
-      , template = "%StdinReader% }{ %battery%   %vol%   %hack%   <fc=#F30085>%date%</fc>"
+      , template = "%StdinReader% }{ %battery%  %vol%  %hack%  <fc=#F30085>%date%</fc>"
       }
 
