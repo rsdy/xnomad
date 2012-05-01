@@ -49,6 +49,7 @@ import XMonad.Actions.UpdatePointer
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import XMonad.Actions.CycleWS
 
 myTerminal      = "exec urxvtc"
 myBorderWidth   = 2
@@ -109,6 +110,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,               xK_space ), sendMessage NextLayout)-- Rotate through the available layout algorithms
     , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)--  Reset the layouts on the current workspace
     , ((modMask,               xK_n     ), refresh)-- Resize viewed windows to the correct size
+    , ((modMask,               xK_minus ), toggleWS)-- Move focus to the previous workspace
     , ((modMask,               xK_Tab   ), windows W.focusDown)-- Move focus to the next window
     , ((modMask,               xK_j     ), windows W.focusDown)-- Move focus to the next window
     , ((modMask,               xK_k     ), windows W.focusUp  )-- Move focus to the previous window
