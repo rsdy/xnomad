@@ -51,7 +51,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import XMonad.Actions.CycleWS
 
-myTerminal      = "exec urxvtc"
+myTerminal      = "exec urxvt"
 myBorderWidth   = 2
 myModMask       = mod4Mask
 
