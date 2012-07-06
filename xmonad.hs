@@ -72,7 +72,7 @@ mySP = defaultXPConfig
        }
 
 myAutoSP = mySP { autoComplete = Just 1000 }
-myWaitSP = mySP { autoComplete = Just 1000000 }
+myWaitSP = mySP { autoComplete = Just 100000 }
 
 searchEngineMap method = M.fromList $
     [ ((0, xK_g), method google)
