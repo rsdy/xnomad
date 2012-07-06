@@ -5,12 +5,12 @@ Config { font = "xft:Envy Code R-8"
       , lowerOnStart = False
       , commands = [ Run Date "%a %b %_d %H:%M" "date" 10
                    , Run Com "~/.xmonad/hacksense.sh" [] "hack" 3000
-                   , Run BatteryP ["BAT0"] ["-t", "bat: <timeleft>"] 100
+                   , Run BatteryP ["BAT0"] ["-t", "b: <timeleft>"] 100
                    , Run CommandReader "~/.xmonad/vol.sh" "vol"
                    , Run StdinReader
                    ]
       , sepChar = "%"
       , alignSep = "}{"
-      , template = "%StdinReader% }{ %battery%  %vol%  %hack%  <fc=#F30085>%date%</fc>"
+      , template = "%StdinReader% }{ %battery% <fc=#F30085>|</fc> %vol% <fc=#F30085>|</fc> %hack% <fc=#F30085>| %date%</fc>"
       }
 

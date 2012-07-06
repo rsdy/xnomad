@@ -265,12 +265,12 @@ myStartupHook = return ()
 
 myXmobarPP xmproc = xmobarPP
              { ppOutput = hPutStrLn xmproc
-             , ppTitle = xmobarColor "#f30085" "" . shorten 100
+             , ppTitle = xmobarColor "#f30085" "" . shorten 100 . xmobarStrip
              , ppCurrent = xmobarColor "#f30085" ""
-             , ppUrgent = xmobarColor "#FF0000" "" . xmobarStrip
-             , ppLayout = wrap " [" "] "
+             , ppUrgent = xmobarColor "#ffffff" "#f30085" . xmobarStrip
+             , ppLayout = xmobarColor "#7c7c7c" ""
              , ppSort = fmap (.scratchpadFilterOutWorkspace) getSortByIndex
-             , ppSep = "  "
+             , ppSep = " <fc=#F30085>|</fc> "
              }
 
 main = do
