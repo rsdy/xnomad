@@ -267,7 +267,7 @@ myXmobarPP xmproc = xmobarPP
              { ppOutput = hPutStrLn xmproc
              , ppTitle = xmobarColor "#f30085" "" . shorten 100 . xmobarStrip
              , ppCurrent = xmobarColor "#f30085" ""
-             , ppUrgent = xmobarColor "#ffffff" "#f30085" . xmobarStrip
+             , ppUrgent = xmobarColor "#ffffff" "#f30085"
              , ppLayout = xmobarColor "#7c7c7c" ""
              , ppSort = fmap (.scratchpadFilterOutWorkspace) getSortByIndex
              , ppSep = " <fc=#F30085>|</fc> "
