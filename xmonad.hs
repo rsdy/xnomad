@@ -2,6 +2,7 @@
 -- Author: Vic Fryzel
 -- http://github.com/vicfryzel/xmonad-config
 
+import Data.String.Utils (replace)
 import System.IO
 import System.Exit
 
@@ -96,7 +97,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- prompts
     , ((modMask,               xK_grave ), scratchpadSpawnAction conf) -- quake terminal
     , ((modMask .|. controlMask, xK_o   ), promptSelection "firefox")
-    , ((modMask .|. controlMask, xK_s   ), transformSafePromptSelection ("http://google.com/search?q=" ++) "firefox")
+    , ((modMask .|. controlMask, xK_s   ), transformSafePromptSelection ((++) "http://google.com/search?q=" . replace " " "+") "firefox")
     , ((modMask .|. controlMask, xK_w   ), windowPromptGoto myWaitSP)
     , ((modMask .|. controlMask, xK_e   ), windowPromptBring myWaitSP)
     , ((modMask .|. controlMask, xK_slash), (SM.submap $ searchEngineMap $ promptSearch mySP)
