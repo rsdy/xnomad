@@ -13,6 +13,7 @@ import XMonad.Actions.WindowGo
 import qualified XMonad.Actions.Submap as SM
 
 import XMonad.Prompt
+import XMonad.Util.Run
 import XMonad.Prompt.Input
 import XMonad.Prompt.RunOrRaise
 import XMonad.Prompt.Shell
@@ -90,7 +91,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. controlMask, xK_l   ), spawn "~/.xmonad/lock.sh")
     , ((modMask .|. controlMask, xK_F12 ), spawn "~/.xmonad/setxkbmap.sh us")
     , ((modMask .|. controlMask, xK_F11 ), spawn "~/.xmonad/setxkbmap.sh hu")
-    , ((modMask .|. controlMask, xK_F8  ), spawn "urxvt -title mocp -e mocp")
+    , ((modMask .|. controlMask, xK_F8  ), raiseMaybe (runInTerm "-title mutt" "mutt" >> windows (W.greedyView "irc")) (title =? "mutt"))
     , ((0, 0x1008ff11                   ), spawn "amixer set Master 1-")
     , ((0, 0x1008ff13                   ), spawn "amixer set Master 1+")
 
@@ -135,8 +136,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- mod-shift-[1..9], Move client to workspace N
     --
     [((m .|. modMask, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        | (i, k) <- zip (XMonad.workspaces conf) $ init key_set
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+    ++
+    [((modMask, xK_0  ), raiseMaybe (runInTerm "-title mocp" "mocp" >> windows (W.greedyView "music")) (title =? "mocp"))]
     ++
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
@@ -148,8 +151,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     ++
     -- "M-C-S-[1..9,0,-]" -- Move client to workspace N and follow
     [((m .|. controlMask .|. modMask, k), (windows $ W.shift i) >> (windows $ f i))
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        | (i, k) <- zip (XMonad.workspaces conf) key_set
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+        where key_set = [xK_1 .. xK_9] ++ [xK_0]
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
