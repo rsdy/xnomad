@@ -56,7 +56,7 @@ myTerminal      = "exec urxvt"
 myBorderWidth   = 2
 myModMask       = mod4Mask
 
-myWorkspaces    = ["comm","web","irc","4","5","6","7","music","vm"]
+myWorkspaces    = ["comm","web","irc","4","5","6","7","8","9","music"]
 
 -- prompts
 mySP = defaultXPConfig
@@ -188,7 +188,7 @@ myLayout = smartBorders
            $ layoutHints
            $ onWorkspace "irc" irc
            $ onWorkspace "web" tabs
-           $ onWorkspace "vm" Full
+           $ onWorkspace "9" Full
            $ avoidStruts
            $ basicLayout
   where
@@ -230,12 +230,15 @@ composeRules = composeOne $
      floatC  = [ "MPlayer", "Vlc", "Smplayer", "Gimp", "Exe", "<unknown>" ]
      floatT  = [ "Grafika hazi feladat" ]
      floatR  = [ "compose", "plugin-container" ]
-     shiftC  = [ ("VirtualBox",    "vm" )
+     shiftC  = [ ("VirtualBox",    "9" )
                , ( "Transmission-gtk", "irc" )
-               , ( "Keepassx",     "5" )
-               , ( "Skype",        "irc" ) ]
+               , ( "Keepassx",     "9" )
+               , ( "Skype",        "irc" )
+               , ( "chromium_incognito", "web" )
+               , ( "firefox_casual", "web" )
+               , ( "firefox_feedreader", "comm" ) ]
      shiftT  = [ ( "mocp",         "music" )
-               , ( "k2net",        "irc" ) ]
+               , ( "mutt",        "irc" ) ]
 
 
 myManageHook = manageDocks
