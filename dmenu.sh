@@ -4,4 +4,4 @@
 # http://github.com/vicfryzel/xmonad-config
 
 exe=$(dmenu_path | /usr/bin/dmenu -fn 'xft:Envy Code R:size=10' \
-	-nb '#000000' -nf '#FFFFFF' -sb '#222222' -sf '#b6e77d') && eval "exec $exe"
+	-nb '#002b36' -nf '#657b83' -sb '#073642' -sf '#f30085') && eval "exec $exe"

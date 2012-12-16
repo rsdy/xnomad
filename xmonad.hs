@@ -62,9 +62,9 @@ myWorkspaces    = ["comm","web","irc","4","5","6","7","8","9","music"]
 -- prompts
 mySP = defaultXPConfig
        { font = "xft:Envy Code R:pixelsize=10"
-       , bgColor           = "#222222"
-       , fgColor           = "#f2f2f2"
-       , fgHLight          = "#f2f2f2"
+       , bgColor           = "#002b36"
+       , fgColor           = "#657b83"
+       , fgHLight          = "#657b83"
        , bgHLight          = "#f30085"
        , borderColor       = "#f30085"
        , promptBorderWidth = 0
@@ -179,14 +179,14 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myNormalBorderColor  = "#222222"
+myNormalBorderColor  = "#002b36"
 myFocusedBorderColor = "#f30085"
-myTabConfig = defaultTheme {   activeBorderColor = "#f30085"
-                             , activeTextColor = "#f2f2f2"
-                             , activeColor = "#f30085"
-                             , inactiveBorderColor = "#222222"
-                             , inactiveTextColor = "#f2f2f2"
-                             , inactiveColor = "#222222" }
+myTabConfig = defaultTheme {   activeBorderColor = "#073642"
+                             , activeColor = "#073642"
+                             , activeTextColor = "#f30085"
+                             , inactiveBorderColor = "#002b36"
+                             , inactiveColor = "#002b36"
+                             , inactiveTextColor = "#657b83" }
 
 myLayout = smartBorders
            $ layoutHints
