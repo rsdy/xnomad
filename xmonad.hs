@@ -139,7 +139,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
         | (i, k) <- zip (XMonad.workspaces conf) $ init key_set
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
-    [((modMask, xK_0  ), raiseMaybe (runInTerm "-title mocp" "~/bin/mount-mocp.sh" >> windows (W.greedyView "music")) (title =? "mocp"))]
+    [((modMask, xK_0  ), raiseMaybe (runInTerm "-name mocp" "~/bin/mount-mocp.sh" >> windows (W.greedyView "music")) (appName =? "mocp"))]
     ++
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
