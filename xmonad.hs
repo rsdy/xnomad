@@ -97,7 +97,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- prompts
     , ((modMask,               xK_grave ), scratchpadSpawnActionCustom "urxvt -name scratchpad -e /usr/bin/tmux") -- quake terminal
-    , ((modMask .|. controlMask, xK_o   ), promptSelection "firefox")
+    , ((modMask .|. controlMask, xK_o   ), promptSelection "/usr/bin/firefox")
     , ((modMask .|. controlMask, xK_s   ), transformSafePromptSelection ((++) "http://google.com/search?q=" . replace " " "+") "firefox")
     , ((modMask .|. controlMask, xK_w   ), windowPromptGoto myWaitSP)
     , ((modMask .|. controlMask, xK_e   ), windowPromptBring myWaitSP)
