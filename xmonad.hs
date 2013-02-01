@@ -1,7 +1,3 @@
--- xmonad config used by Vic Fryzel
--- Author: Vic Fryzel
--- http://github.com/vicfryzel/xmonad-config
-
 import Data.String.Utils (replace)
 import System.IO
 import System.Exit
@@ -53,11 +49,14 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import XMonad.Actions.CycleWS
 
+import XMonad.Hooks.EwmhDesktops
+
 myTerminal      = "exec urxvt"
 myBorderWidth   = 2
 myModMask       = mod4Mask
+myBrowser       = "/usr/bin/firefox"
 
-myWorkspaces    = ["comm","web","irc","4","5","6","7","8","9","music"]
+myWorkspaces    = ["comm","web","irc","emacs","5","6","7","8","9","music"]
 
 -- prompts
 mySP = defaultXPConfig
@@ -91,14 +90,14 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. controlMask, xK_l   ), spawn "~/.xmonad/lock.sh")
     , ((modMask .|. controlMask, xK_F12 ), spawn "~/.xmonad/setxkbmap.sh us")
     , ((modMask .|. controlMask, xK_F11 ), spawn "~/.xmonad/setxkbmap.sh hu")
-    , ((modMask .|. controlMask, xK_F8  ), raiseMaybe (runInTerm "-title mutt" "mutt" >> windows (W.greedyView "irc")) (title =? "mutt"))
+    , ((modMask .|. controlMask, xK_m  ), raiseMaybe (runInTerm "-title mutt" "mutt" >> windows (W.greedyView "irc")) (title =? "mutt"))
     , ((0, 0x1008ff11                   ), spawn "amixer set Master 1-")
     , ((0, 0x1008ff13                   ), spawn "amixer set Master 1+")
 
     -- prompts
     , ((modMask,               xK_grave ), scratchpadSpawnActionCustom "urxvt -name scratchpad -e /usr/bin/tmux") -- quake terminal
-    , ((modMask .|. controlMask, xK_o   ), promptSelection "/usr/bin/firefox")
-    , ((modMask .|. controlMask, xK_s   ), transformSafePromptSelection ((++) "http://google.com/search?q=" . replace " " "+") "firefox")
+    , ((modMask .|. controlMask, xK_o   ), promptSelection myBrowser)
+    , ((modMask .|. controlMask, xK_s   ), transformSafePromptSelection ((++) "http://google.com/search?q=" . replace " " "+") myBrowser)
     , ((modMask .|. controlMask, xK_w   ), windowPromptGoto myWaitSP)
     , ((modMask .|. controlMask, xK_e   ), windowPromptBring myWaitSP)
     , ((modMask .|. controlMask, xK_slash), (SM.submap $ searchEngineMap $ promptSearch mySP)
@@ -139,7 +138,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
         | (i, k) <- zip (XMonad.workspaces conf) $ init key_set
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
-    [((modMask, xK_0  ), raiseMaybe (runInTerm "-name mocp" "~/bin/mount-mocp.sh" >> windows (W.greedyView "music")) (appName =? "mocp"))]
+    [ ((modMask, xK_0  ), raiseMaybe (runInTerm "-name mocp" "~/bin/mount-mocp.sh" >> windows (W.greedyView "music")) (appName =? "mocp"))
+    , ((modMask, xK_4  ), raiseMaybe (spawn "emacs" >> windows (W.greedyView "emacs")) (className =? "Emacs"))
+    ]
     ++
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
@@ -192,6 +193,7 @@ myLayout = smartBorders
            $ layoutHints
            $ onWorkspace "irc" irc
            $ onWorkspace "web" tabs
+           $ onWorkspace "emacs" emacs
            $ onWorkspace "9" Full
            $ avoidStruts
            $ basicLayout
@@ -202,6 +204,7 @@ myLayout = smartBorders
      irc     = (named "irc" $ avoidStruts $ Tall 1 0 (1/2)) ||| mgrid
      wide    = named "wide" $ Mirror tall
      mgrid   = named "grid" $ Mag.magnifiercz 1.2 $ Grid
+     emacs   = avoidStruts $ wide ||| tabs
      nmaster = 1
      ratio   = 2/3
      delta   = 3/100
@@ -240,7 +243,8 @@ composeRules = composeOne $
                , ( "Skype",        "irc" )
                , ( "chromium_incognito", "web" )
                , ( "firefox_casual", "web" )
-               , ( "firefox_feedreader", "comm" ) ]
+               , ( "firefox_feedreader", "comm" )
+               , ( "Emacs", "emacs" ) ]
      shiftT  = [ ( "mocp",         "music" )
                , ( "mutt",        "irc" ) ]
 
@@ -287,7 +291,7 @@ myXmobarPP xmproc = xmobarPP
 
 main = do
     xmproc <- spawnPipe "exec /usr/bin/xmobar ~/.xmonad/xmobar"
-    xmonad $ withUrgencyHook NoUrgencyHook defaultConfig
+    xmonad $ withUrgencyHook NoUrgencyHook $ ewmh defaultConfig
              { terminal           = myTerminal
              , focusFollowsMouse  = myFocusFollowsMouse
              , borderWidth        = myBorderWidth
